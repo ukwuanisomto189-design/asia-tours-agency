@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Tour</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .card-header {
+            background: linear-gradient(to right, #0f3460, #533483);
+            border-radius: 16px 16px 0 0 !important;
+            padding: 2rem;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 3px rgba(83,52,131,0.2);
+            border-color: #533483;
+        }
+        .btn-save {
+            background: linear-gradient(to right, #0f3460, #533483);
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .btn-save:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            transition: all 0.2s;
+        }
+        label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center py-5">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+
+                <div class="card">
+                    <div class="card-header text-white text-center">
+                        <div style="font-size: 2.5rem;">✈️</div>
+                        <h4 class="fw-bold mb-1 mt-2">Add New Tour</h4>
+                        <p class="mb-0 opacity-75 small">Fill in the details to create a new tour</p>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-save text-white">Save Tour 🚀</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <a href="/" class="text-white-50 small">← Back to Home</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
