@@ -13,7 +13,7 @@
             background: linear-gradient(to right, #1a1a2e, #16213e) !important;
         }
         .navbar-brand {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             letter-spacing: 1px;
         }
         .card {
@@ -32,6 +32,7 @@
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.85rem;
+            white-space: nowrap;
         }
         .badge-price {
             background-color: #e6f4ea;
@@ -40,6 +41,7 @@
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
+            white-space: nowrap;
         }
         .stat-card {
             border-radius: 12px;
@@ -58,6 +60,7 @@
             padding: 10px 24px;
             border-radius: 8px;
             font-weight: 600;
+            white-space: nowrap;
         }
         .btn-add:hover {
             opacity: 0.9;
@@ -65,14 +68,26 @@
             transform: translateY(-1px);
             transition: all 0.2s;
         }
+        @media (max-width: 768px) {
+            .stat-card {
+                padding: 1rem;
+            }
+            .navbar-brand {
+                font-size: 1rem;
+            }
+            .btn-add {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-dark px-4 py-3">
+    <nav class="navbar navbar-dark px-3 py-3">
         <span class="navbar-brand fw-bold">✈️ Asia Tours Agency</span>
-        <div class="d-flex align-items-center gap-3">
-            <span class="text-white-50 small">Welcome, {{ request.user.username }}</span>
+        <div class="d-flex align-items-center gap-2">
+            <span class="text-white-50 small d-none d-md-block">Welcome, {{ request.user.username }}</span>
             <form method="post" action="/accounts/logout/">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-light btn-sm px-3">Logout</button>
@@ -80,40 +95,40 @@
         </div>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container-fluid container-md mt-4 px-3">
 
         <!-- Stats Row -->
         <div class="row g-3 mb-4">
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card stat-purple">
                     <div class="small opacity-75">Total Tours</div>
-                    <div class="fs-3 fw-bold">{{ tours|length }}</div>
+                    <div class="fs-4 fw-bold">{{ tours|length }}</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card stat-green">
                     <div class="small opacity-75">Destinations</div>
-                    <div class="fs-3 fw-bold">{{ tours|length }}</div>
+                    <div class="fs-4 fw-bold">{{ tours|length }}</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card stat-blue">
                     <div class="small opacity-75">Month</div>
-                    <div class="fs-3 fw-bold">June</div>
+                    <div class="fs-4 fw-bold">June</div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-6 col-md-3">
                 <div class="stat-card stat-orange">
                     <div class="small opacity-75">Year</div>
-                    <div class="fs-3 fw-bold">2026</div>
+                    <div class="fs-4 fw-bold">2026</div>
                 </div>
             </div>
         </div>
 
         <!-- Table Section -->
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
             <div>
-                <h3 class="fw-bold mb-0">Tours Schedule</h3>
+                <h3 class="fw-bold mb-0 fs-5 fs-md-3">Tours Schedule</h3>
                 <p class="text-muted small mb-0">June 2026 — {{ tours|length }} tour(s) available</p>
             </div>
             <a href="/add/" class="btn btn-add">+ Add New Tour</a>
@@ -121,35 +136,37 @@
 
         <div class="card">
             <div class="card-body p-0">
-                <table class="table table-hover mb-0">
-                    <thead class="table-dark">
-                        <tr>
-                            <th class="ps-4">No.</th>
-                            <th>ID</th>
-                            <th>Origin Country</th>
-                            <th>Destination Country</th>
-                            <th>Nights</th>
-                            <th>Price</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for tour in tours %}
-                        <tr>
-                            <td class="ps-4 text-muted">{{ forloop.counter }}</td>
-                            <td><span class="text-muted">#{{ tour.id }}</span></td>
-                            <td class="fw-semibold">{{ tour.origin_country }}</td>
-                            <td class="fw-semibold">{{ tour.destination_country }}</td>
-                            <td><span class="badge-nights">{{ tour.number_of_nights }} nights</span></td>
-                            <td><span class="badge-price">${{ tour.price }}</span></td>
-                            <td>
-                                <a href="/edit/{{ tour.id }}/" class="btn btn-outline-warning btn-sm me-1">Edit</a>
-                                <a href="/delete/{{ tour.id }}/" class="btn btn-outline-danger btn-sm">Delete</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-dark">
+                            <tr>
+                                <th class="ps-3">No.</th>
+                                <th>ID</th>
+                                <th>Origin</th>
+                                <th>Destination</th>
+                                <th>Nights</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tour in tours %}
+                            <tr>
+                                <td class="ps-3 text-muted">{{ forloop.counter }}</td>
+                                <td><span class="text-muted">#{{ tour.id }}</span></td>
+                                <td class="fw-semibold">{{ tour.origin_country }}</td>
+                                <td class="fw-semibold">{{ tour.destination_country }}</td>
+                                <td><span class="badge-nights">{{ tour.number_of_nights }} nights</span></td>
+                                <td><span class="badge-price">${{ tour.price }}</span></td>
+                                <td>
+                                    <a href="/edit/{{ tour.id }}/" class="btn btn-outline-warning btn-sm me-1">Edit</a>
+                                    <a href="/delete/{{ tour.id }}/" class="btn btn-outline-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
